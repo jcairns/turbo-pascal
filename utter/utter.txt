@@ -1,0 +1,227 @@
+Files included with UTTER202.ZIP:
+
+   UTTER.EXE --- executable
+   UTTER.DAT --- default data file containing quotes
+   UTTER.txt --- this file, containing installation instructions, version
+                 changes, and detailed documentation for the usage of UTTER.
+
+
+This file (UTTER.txt) is not essential for the execution of UTTER.EXE; it is
+merely the output (for the most part) from executing UTTER as follows:
+  UTTER /V? > UTTER.txt
+
+
+Installation Instructions
+=========================
+- UTTER is best used within your AUTOEXEC.BAT file; thus, upon start-up, a
+  quote will be displayed. My AUTOEXEC.BAT file has the following:
+     C:\UTILS\UTTER.EXE /WMK
+  This updates the default data file UTTER.DAT automatically if it requires
+  updating, displays a quote, then prompts the user to press a key or click
+  a mouse button to continue.
+
+- UTTER requires an ASCII data file which contains the quotes to display.
+  By default this is called UTTER.DAT; however, this can be over-ridden by
+  specifying a different file on the command-line.
+
+- When UTTER is first executed it will create an index file called UTTER.IDX.
+  Every data file requires an index file located in the same directory as
+  its data file.
+
+
+Version Changes
+===============
+  UTTER 2.03 - updated email address of author. (July 4, 2004)
+  UTTER 2.02 - when the /V option (DOS output) was specified and output
+               was re-directed, quotes were not displayed correctly.
+               This has been fixed.  Thanks to Roger Burton-West for
+               the original bug report.
+
+  UTTER 2.01 - non-enhanced keyboard bug fixed.
+             - number of optimizations made.
+
+  UTTER 2.0  - all options may now be present in the UTTER environment
+               variable.  The syntax of the variable is exactly the same as
+	       the command-line.  Thus, if the environment had
+	 	 UTTER=quotes.dat /vr /w
+	       It would be identical as executing UTTER on the command-line
+	       as:
+	 	 UTTER quotes.dat /vr /w
+	       Any command-line options override any environment options if
+	       they can be overridden.  Thus, if /V was set in the
+               environment, and /D was specified on the command-line, /V
+               would be ignored.  However, if /V was set in the environment
+               and /R was specified on the command-line, /V would NOT be
+               ignored since neither option is related to the other.
+               Thanks to Roger Burton-West for the idea.
+	     - quotes are now limited to a length of about 2,048 bytes.
+	     - the following options have been added:
+	        /C  - Clears screen before quote is uttered. Thanks to Dawn
+	 	      Torraville for the suggestion.
+	 	/G  - displays the value of the environment variable UTTER.
+	 	/D  - utter quotes Directly to video memory.  This is the
+	 	      default output routine.
+                /O  - displays UTTER's Options.
+	 	/#  - utter # quotes, where # is greater than or equal to
+                      0.  Thus, if /10 was specified, 10 quotes would be
+                      displayed.  If # is greater than the number of
+                      quotes in the data file, and the /R is not specified,
+                      then # is set to the number of quotes in the data
+                      file.  Again, credit goes to Roger Burton-West for
+                      this one.
+                /A  - if the data file is being updated and a no tilde (~)
+                      is found at the end of the file, a tilde is Appended
+                      to the file.  Some editors add control characters at
+                      the end of files, or you may forget to add a tilde to
+                      the last quote.  This option adds it automatically.
+                /T  - as with the /A option, except the file is Truncated
+                      instead of a tilde being added.  The point of
+                      truncation is the position where the last tilde was
+                      found.  Thus, if your editor added some control
+                      characters to the data file that you don't want, this
+                      option will get rid of them.  Use this carefully,
+                      making sure you are updating a quote data file, not
+                      some other vital file, because the file is changed.
+
+  UTTER 1.0  - original public-domain release.
+
+
+Detailed Documentation
+======================
+UTTER 2.03, Copyright (c) 2004, Jody R. Cairns
+
+Syntax: UTTER  [option(s)]  [data file path]
+
+Options: /N  ---------- show Number of quotes in data file
+         /R  ---------- utter Random quote
+         /W  ---------- disable all Warning prompts
+         /D  ---------- utter quotes Directly to video memory (default)
+         /B  ---------- use BIOS routines for video output (slower)
+         /V  ---------- use DOS routines for Video output (slowest)
+         /S  ---------- enable video Snow-checking (for CGA monitors)
+         /C  ---------- Clear the screen before quote is uttered
+         /K  ---------- prompt user to press a Key after quote
+         /M  ---------- prompt user to click Mouse button after quote
+         /O  ---------- display these Options
+         /G  ---------- display UTTER environment variable settinG
+         /#  ---------- utter # quotes, where # is a minimum of 0
+         /P[x]  ------- Pause for approximately x seconds after quote
+                        (default is 2 seconds, maximum is 60)
+         /U[A|T]  ----- Update index file, Adding tilde (~) or Truncating
+                        data file if tilde is missing
+         /E[editor]  -- invoke Editor (EDIT is default)
+         /?, /H  ------ for more information
+
+- UTTER displays a quote from an ASCII text data file, called UTTER.DAT
+  by default, which is assumed to be in the same directory as UTTER.EXE.
+
+- All quotes in the data file must end with a tilde (~).  The length of
+  each quote is limited to 2,048 bytes.
+
+- To use a different data file just specify its full path name on the
+  command-line.  If the default data file is in a different directory
+  than the executable file, then specify the directory name on the
+  command-line, making sure it ends with a `\' character.
+
+- An index file is associated with each different data file, having the
+  same name as the data file except with an .IDX extension.
+
+- Each index file must be in the same directory as its corresponding data
+  file.  Index files are created automatically if they do not exist in the
+  same directory as its data file or if they are corrupt in some way.
+
+- All options may be preset in the UTTER environment variable, having the
+  same syntax as the command-line.  Options specified on the command-line
+  override any applicable options in the environment variable.
+
+- Options can appear in any order and can be combined.
+
+ Explanation of options (examples follow)
+ ======================
+   /N  --------- display the number of quotes in the current data file.
+   /R  --------- utter a random quote from the current data file.
+   /W  --------- disable any warning prompts when creating index file.
+   /D  --------- write output directly to video memory. This is the
+                 default output method.
+   /B  --------- use BIOS routines for output, which is slower. If your
+                 monitor acts up and the /S option does not fix it, try
+                 this option.
+   /V  --------- use DOS routines for output.  This is the slowest but it
+                 allows any output to be redirected, if desired.
+   /S  --------- enable video snow-checking, which CGA screens may
+                 require.
+   /C  --------- clear the screen before a quote is uttered.
+   /K  --------- prompt the user after a quote is uttered with the
+                 following: "Press any key to continue...".
+   /M  --------- prompt the user after a quote is uttered with the
+                 following: "Click mouse button to continue...".  If the
+                 /K option is enabled in addition to this one, the prompt
+                 is: "Press any key or click mouse button to continue..."
+   /O  --------- display UTTER's options.
+   /G  --------- display UTTER environment variable settinG, if it is set.
+   /#  --------- utter the number of quotes specified by #, which must be
+                 greater than or equal to 0.  If # is greater than the
+                 number of quotes in the data file and the /R option is
+                 not specified then # is set to the number of quotes in
+                 the data file.
+   /P[x]  ------ after a quote is uttered, pause for the specified
+                 number of seconds, or for 2 seconds by default.
+                 Seconds must be >= 0 and <= 60.  If x is specified, the
+                 /# option cannot immediately follow x.  Ex: "/P62" ->
+                 wrong, "/P6 /2" -> right, "/2P6"-> right.  If the /K or
+                 /M options are specified too, the /P[x] option will be
+                 executed first.
+   /U[A|T]  ---- update current data file, creating an index file for it.
+                 If a tilde (~) is missing at the end of the data file,
+                 the /A option adds a tilde to the end of the data file.
+                 The /T option truncates the data file to where the last
+                 tilde was if a tilde is missing.  If the /W option is
+                 specified and /A and /T are not, then the data file is
+                 unchanged.  Note that the /A and /T options do not have
+                 to follow /U; they can appear anywhere on the command-
+                 line.
+   /E[editor]  - execute, by default, the editor EDIT using either the
+                 default data file UTTER.DAT or the file specified on the
+                 command-line.  To use a different editor, specify the
+                 editor's name immediately after the /E option.
+
+ Examples
+ ========
+1) UTTER  /11  quotes.txt  /vr  /k
+   - displays eleven (11) random quotes from the file QUOTES.TXT using
+     DOS output routines and prompts user to press a key afterwards.
+
+2) UTTER  /wu  /eMyEdit  /t
+   - executes the editor MYEDIT on the default data file UTTER.DAT, then
+     updates the index file automatically after MYEDIT execution halts.
+     If the data file contains a quote that does not end with a tilde,
+     then that quote is deleted ("/t" option) from the data file.
+
+3) UTTER  /sp5  \utils\  /r
+   - displays a random quote from the default data file UTTER.DAT located
+     in the \UTILS\ directory using snow-checking, pausing for five
+     seconds afterwards.
+
+4) UTTER  /r5p1vw  /u
+   - displays five (5) random quotes from the default data file,
+     updating it automatically first, pausing for one second afterwards.
+     This cryptic example could have been specified a number of ways,
+     including "UTTER /r /5 /p1 /v /w /u", or "UTTER /uvp1r5w", etc.
+
+ Copyright Information
+ =====================
+- This software may be freely distributed without cost, provided it is
+  not changed in any way.  If you find this program useful, donations to
+  the address listed below would be most appreciated.
+
+- I take no responsibility for any liability, loss, or damage caused or
+  alleged to be caused directly or indirectly from the use of this
+  program.
+
+- UTTER was written in Turbo Pascal 6.0.  Source code is available for a
+  small fee.
+
+- If you discover any bugs, or have any ideas or suggestions, please feel
+  free to contact me:
+    Jody R. Cairns
+    E-mail: jcairns@gmail.com
