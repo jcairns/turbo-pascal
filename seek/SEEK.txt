@@ -1,0 +1,222 @@
+Files included with SEEK203.ZIP:
+
+   SEEK.EXE --- executable
+   SEEK.txt --- this file, containing installation instructions, version
+                changes, and detailed documentation for the usage of
+                SEEK.
+   SEEK.pas --- Turbo Pascal 6.0 source code                
+
+
+This file (SEEK.txt) is not essential for the execution of SEEK.EXE; it
+is merely the output (for the most part) from executing SEEK as follows:
+  SEEK /V? > SEEK.txt
+
+
+Installation Instructions
+=========================
+- SEEK is best used if placed within a directory located in your PATH
+  setting.
+
+- SEEK is very easy to use.  You have little to worry about concerning
+  where to put options and in what order.  Options can appear anywhere
+  on the command-line and can also be combined. For example, all the
+  following will do the exact same thing (they are all equivalent):
+
+   1)  SEEK /i /v *.* *.bak
+
+   2)  SEEK *.bak /V /I *.* /vi
+
+   3)  SEEK /iV *.bak *.*
+
+   4)  SEEK *.* /V /I *.bak
+
+   5)  SEEK /v *.bak *.* /IV
+
+   6)  ...  etc.
+
+
+New Features in SEEK 2.0+
+=========================
+ 1) Incorrectly detected DOS versions.  This has been fixed.
+
+ 2) There was a bug with systems that had a non-enhanced keyboard.  This
+    has been fixed.
+
+ 3) Optimized to be much faster than previous versions and most (if not
+    all) other file searching utilities that include as many features.
+
+ 4) GREP-like string searching is now available.  The string is simply
+    placed between quotes anywhere on the command-line.  However, unlike
+    GREP, the string is not displayed; but the offset where it was found
+    can be displayed.  The search algorithm is very fast.
+
+ 5) New options:
+   /B  ---------- begin searching in the current directory.  By default,
+                  SEEK begins from the root directory.
+   /C  ---------- change to the directory of the first matching file.
+                  Execution is also halted with this option.
+   /F  ---------- seek only files.  Directory entries are ignored.  To
+                  seek only directories, specify the /AD option.
+   /L  ---------- ignore letter-case during string search.
+   /O  ---------- display the offset where a found string was found
+                  within file.  The offset is displayed in hexadecimal.
+   /Q  ---------- quit seeking when the first matching file is found.
+   /T  ---------- as with option /O, except the offset is displayed in
+                  decimal.
+
+ 6) All numbers greater than 999 are now displayed with a thousands
+    comma separator.  Thanks to Ivan Hofsajer for the original
+    suggestion.
+
+ 7) SEEK should recognize networks.  A user of a previous version of
+    SEEK informed me that the /D option (scan all drives) did not
+    recognize all the drives on his network.  This has been fixed, I
+    think.  If the network drives are not scanned with the /D option
+    now, please let me know.
+
+ 8) Pressing <Esc> or <Ctrl-Break> halts execution cleanly.
+
+ 9) The directories . and .. (representing the current and parent direc-
+    tories, respectively) are no longer displayed.
+
+
+Detailed Documentation
+======================
+
+SEEK 2.03, Copyright (c) 2004, Jody R. Cairns
+
+Syntax:  SEEK  [options]  ["search string"]  [drives:]  files...
+
+Options:  /B  -------------- Begin seeking in current directory
+          /C  -------------- Change to directory of found file
+          /D  -------------- scan all Drives for files
+          /F  -------------- seek only Files; ignore directories
+          /I  -------------- show file Info: size, attribute(s), & date
+          /L  -------------- ignore Letter-case during string search
+          /O  -------------- display Offset where search string is found
+                             in hexadecimal
+          /P  -------------- Pause after screenful of information
+          /Q  -------------- Quit seeking when first file is found
+          /R  -------------- Run files if found (must have COM, EXE,
+                             or BAT extension)
+          /T  -------------- display offset where search string is found
+                             in decimal
+          /V  -------------- use DOS routines for Video output (slower)
+          /A(AHRSD)  ------- seek files by specified Attribute(s)
+          /Ecommand  ------- Execute specified command on files
+          /S[-]size[-]  ---- seek files by Size specified or by range
+          /?, /H  ---------- for more information and syntax examples
+
+- SEEK searches for all the files specified on the command-line and
+  displays their full path name if found.
+
+- To search for any string within seeked files, specify the string be-
+  tween two (2) quotes (").  If your string contains a quote symbol, use
+  2 quotes to represent 1 quote within the quoted string.  The search
+  string can appear anywhere on the command-line.
+
+- You can search across different drives.  Just specify the drives you
+  want to search followed by a colon.  The /D option (scan all drives)
+  is disabled if any drives are specified.
+
+- If you don't want SEEK to scan entire disks, specify the path from
+  which to start searching.  Note that only the last file specification
+  with a full path name will be considered.  Previous paths are ignored.
+
+- Pressing <Esc> or <Ctrl-Break> at any time halts execution.
+
+- Options can be combined and can appear in any order on the command-
+  line.  If an option is specified more than once, the right-most one
+  takes precedence.
+
+Explanation of options (examples follow)
+======================
+  /B  ---------- begin searching in the current directory.  By default,
+                 SEEK begins from the root directory.
+  /C  ---------- change to the directory of the first matching file.
+                 Execution is also halted with this option.
+  /D  ---------- scan all drives for files.  This option is overridden
+                 if any drives are specified.
+  /F  ---------- seek only files.  Directory entries are ignored.  To
+                 seek only directories, specify the /AD option.
+  /I  ---------- display information of found files: size, date, time,
+                 and file attributes.
+  /L  ---------- ignore letter-case during string search.
+  /O  ---------- display the offset where a found string was found
+                 within file.  The offset is displayed in hexadecimal.
+  /P  ---------- pause after each screenful of information.
+  /Q  ---------- quit seeking when the first matching file is found.
+  /R  ---------- run the files if they are found (they of course must
+                 have a COM, EXE, or BAT extension).
+  /T  ---------- as with option /O, except the offset is displayed in
+                 decimal.
+  /V  ---------- use DOS routines for output. This is slower but it
+                 allows any output to be redirected, if desired.
+  /A(AHRSD) ---- seek files by specified attributes. Attributes can be
+                 combined in any order as long as the first attribute is
+                 preceded by /A. The attributes are: A = Archive, H =
+                 Hidden, R = Read-only, S = System, and D = Directory.
+                 When combined, an OR comparison is performed on the
+                 files.  For example, if the option /AHD was specified,
+                 any files with a Hidden OR a Directory attribute are
+                 sought for.
+  /Ecommand ---- the command specified after this option will be ex-
+                 ecuted on found files. The command specified can be any
+                 DOS command or executable program (which must be in
+                 your PATH).
+  /S[-]size[-] - seek files by specified size. There are four seek
+                 possibilities:
+                  1) /Ssize  ====== find file sizes equal to specified
+                                    size.
+                  2) /S-size ====== find file sizes less than or equal
+                                    to specified size.
+                  3) /Ssize- ====== find file sizes greater than or
+                                    equal to specified size.
+                  4) /Ssize-size1 = find file sizes between the range
+                                    specified by size and size1.
+Examples
+========
+1) SEEK  a:*.bak  /vi  c:  /d
+   - searches for all *.BAK files on drives A and C, displaying all
+     file details and using DOS output routines.  Note that the /d
+     option (scan all drives) is ignored since drives were specified.
+
+2) SEEK  /deTYPE  *.tmp  *.$$$  /eDEL
+   - searches all drives for *.TMP and *.$$$ files, executing the DEL
+     command on any files found.  Note that the command TYPE is not
+     executed since /eDEL appears after it.
+
+3) SEEK  /pt  *.*  /id  "A ""quote"""  /o
+   - scans all drives for *.* files which contain the string 'A "quote"'
+     displaying file information and the offset in hexadecimal where
+     the string was found, pausing with each screenful.  Note that the
+     /t option (show offset in decimal) is overridden since /o appears
+     to the right of it.
+
+4) SEEK  /ad  /arh  *.*  /s0-100  /b
+   - searches current drive starting in the current directory for *.*
+     files that have either a directory, read-only or hidden attribute,
+     and that are between 0 and 100 bytes, inclusive.
+
+5) SEEK  a:  /q  cf:\help.exe  /ri  d:*.zip
+   - searches drives A, C, D, and F for the files HELP.EXE and *.ZIP,
+     displaying file information, running HELP.EXE if found, and
+     quiting as soon as one file is found.
+
+
+ Copyright Information
+ =====================
+- This software may be freely distributed without cost, provided it is
+  not changed in any way.  If you find this program useful, donations
+  to the address listed below would be most appreciated.
+
+- I take no responsibility for any liability, loss, or damage caused or
+  alleged to be caused directly or indirectly from the use of this
+  program.
+
+- SEEK was written in Turbo Pascal 6.0.
+
+- If you discover any bugs, or have any ideas or suggestions, please
+  feel free to contact me:
+     Jody R. Cairns
+     jcairns@gmail.com
